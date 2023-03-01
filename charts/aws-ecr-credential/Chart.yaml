@@ -1,14 +1,14 @@
 apiVersion: v1
-appVersion: "1.4.2"
+appVersion: "1.5.0"
 description: This Chart seemlessly integrates Kubernetes with AWS ECR
 name: aws-ecr-credential
-version: 1.4.2
+version: 1.5.0
 maintainers:
-- email: me@meenaalfons.com
-  name: Meena Alfons
+- email: caseyjmorton@gmail.com
+  name: Casey Morton
 keywords:
 - aws ecr
 - imagePullSecrets
 - kubernetes
 sources:
-  - https://github.com/architectminds/helm-charts/tree/master/charts/aws-ecr-credential
+  - https://github.com/caseyjmorton/aws-ecr-credential/tree/master/charts/aws-ecr-credential
