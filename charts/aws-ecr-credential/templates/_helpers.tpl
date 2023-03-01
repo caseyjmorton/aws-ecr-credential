@@ -63,6 +63,6 @@ Secret Annotations
 metadata:
   annotations:
   {{- range $key, $value := .Values.secretAnnotations }}
-    {{ $key }}: {{ $value }}
+    {{ $key | quote }}: {{ $value | quote }}
   {{- end }}
 {{- end }}

@@ -38,7 +38,7 @@ spec:
               - name: AWS_ACCOUNT
                 value: {{ .Values.aws.account | quote }}
               - name: AWS_REGION
-                value: {{ .Values.aws.region | quote}}
+                value: {{ .Values.aws.region | quote }}
             command:
             - "/bin/sh"
             - "-c"
