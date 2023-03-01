@@ -11,4 +11,4 @@ keywords:
 - imagePullSecrets
 - kubernetes
 sources:
-  - https://github.com/caseyjmorton/aws-ecr-credential/tree/master/charts/aws-ecr-credential
+  - https://caseyjmorton.github.io/aws-ecr-credential

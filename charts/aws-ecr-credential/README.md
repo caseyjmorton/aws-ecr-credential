@@ -12,8 +12,8 @@ Run the following command to install this chart
 helm install --name aws-ecr-credential architectminds/aws-ecr-credential \
   --set-string aws.account=<aws account nubmer> \
   --set aws.region=<aws region> \
-  --set aws.accessKeyId=<base64> \
-  --set aws.secretAccessKey=<base64> \
+  --set aws.accessKeyId=<accessKeyId> \
+  --set aws.secretAccessKey=<secretAccessKey> \
   --set targetNamespace=default
 ```
 
