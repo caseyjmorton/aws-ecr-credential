@@ -1,4 +1,4 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: {{ include "aws-ecr-credential.cronJob" . }}
@@ -41,17 +41,10 @@ spec:
             - |
               AWS_ACCOUNT={{ .Values.aws.account }}
               AWS_REGION={{ .Values.aws.region }}
-              echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
-              echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
-              echo "AWS_ACCOUNT=$AWS_ACCOUNT"
-              echo "AWS_REGION=$AWS_REGION"
+
               DOCKER_REGISTRY_SERVER=https://${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com
               DOCKER_USER=AWS
               DOCKER_PASSWORD=`aws ecr get-login --region ${AWS_REGION} --registry-ids ${AWS_ACCOUNT} | cut -d' ' -f6`
-
-              echo "DOCKER_REGISTRY_SERVER=$DOCKER_REGISTRY_SERVER"
-              echo "DOCKER_USER=$DOCKER_USER"
-              echo "DOCKER_PASSWORD=$DOCKER_PASSWORD"
 
               kubectl delete secret --namespace {{ .Values.targetNamespace }} aws-registry || true
               kubectl create secret --namespace {{ .Values.targetNamespace }} docker-registry aws-registry \
@@ -60,5 +53,8 @@ spec:
               --docker-password=$DOCKER_PASSWORD \
               --docker-email=no@email.local
 
+{{ if (gt (len .Values.secretAnnotations) 0) }}
+              kubectl patch secret --namespace {{ .Values.targetNamespace }} aws-registry -p '{{ include "aws-ecr-credential.secretAnnotations" . | fromYaml | toJson }}'
+{{- end }}
               kubectl patch serviceaccount default -p '{"imagePullSecrets":[{"name":"aws-registry"}]}'
 

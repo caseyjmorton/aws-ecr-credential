@@ -44,7 +44,6 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
-
 {{/*
 Pod labels
 */}}
@@ -57,3 +56,13 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 {{- end -}}
 
+{{/*
+Secret Annotations
+*/}}
+{{- define "aws-ecr-credential.secretAnnotations" -}}
+metadata:
+  annotations:
+  {{- range $key, $value := .Values.secretAnnotations }}
+    {{ $key }}: {{ $value }}
+  {{- end }}
+{{- end }}

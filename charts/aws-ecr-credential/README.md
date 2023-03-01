@@ -19,7 +19,7 @@ helm install --name aws-ecr-credential architectminds/aws-ecr-credential \
 
 That chart will create a secret object names `aws-registry`.
 
-In you kubernetes deployment use `imagePullSecrets: aws-registry`.
+In your kubernetes deployment use `imagePullSecrets: aws-registry`.
 
 Example:
 ```yaml
