@@ -35,16 +35,17 @@ spec:
                   secretKeyRef:
                     name: {{ include "aws-ecr-credential.secret" . }}
                     key: AWS_SECRET_ACCESS_KEY
+              - name: AWS_ACCOUNT
+                value: {{ .Values.aws.account | quote }}
+              - name: AWS_REGION
+                value: {{ .Values.aws.region | quote}}
             command:
             - "/bin/sh"
             - "-c"
             - |
-              AWS_ACCOUNT={{ .Values.aws.account }}
-              AWS_REGION={{ .Values.aws.region }}
-
-              DOCKER_REGISTRY_SERVER=https://${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com
+              DOCKER_REGISTRY_SERVER=https://$AWS_ACCOUNT.dkr.ecr.$AWS_REGION.amazonaws.com
               DOCKER_USER=AWS
-              DOCKER_PASSWORD=`aws ecr get-login --region ${AWS_REGION} --registry-ids ${AWS_ACCOUNT} | cut -d' ' -f6`
+              DOCKER_PASSWORD=`aws ecr get-login --region $AWS_REGION --registry-ids $AWS_ACCOUNT | cut -d' ' -f6`
 
               kubectl delete secret --namespace {{ .Values.targetNamespace }} aws-registry || true
               kubectl create secret --namespace {{ .Values.targetNamespace }} docker-registry aws-registry \
